@@ -14,10 +14,15 @@ end
 
 desc "Builds the package."
 task :build do
-  puts "Nothing to do yet..."
+  Rake::Task[:knife_test].execute
 end
 
 desc "Fires up the Vagrant box."
 task :start do
   puts "Nothing to do yet..."
+end
+
+desc "Runs knife cookbook test against all the cookbooks."
+task :knife_test do
+  sh "bundle exec knife cookbook test -a"
 end
