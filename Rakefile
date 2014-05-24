@@ -57,11 +57,29 @@ end
 desc "Builds the package."
 task :build do
   Rake::Task[:knife_test].execute
+  Rake::Task[:chefspec].execute
+
 end
 
 desc "Fires up the Vagrant box."
 task :start do
   sh "vagrant up"
+end
+
+desc "Creates a new cookbook."
+task :new_cookbook, :name do |t, args|
+  sh "bundle exec knife cookbook create #{args.name}"
+  sh "bundle exec knife cookbook create_specs #{args.name}"
+end
+
+desc "Runs chefspec on all the cookbooks."
+task :chefspec do
+  sh "bundle exec rspec cookbooks"
+end
+
+desc "Runs foodcritic against all the cookbooks."
+task :foodcritic do
+  sh "bundle exec foodcritic -I test/foodcritic/* -f any cookbooks"
 end
 
 desc "Runs knife cookbook test against all the cookbooks."
