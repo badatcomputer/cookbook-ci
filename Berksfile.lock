@@ -1,0 +1,7 @@
+DEPENDENCIES
+  minitest-handler (= 0.1.7)
+
+GRAPH
+  chef_handler (1.1.6)
+  minitest-handler (0.1.7)
+    chef_handler (>= 0.0.0)
