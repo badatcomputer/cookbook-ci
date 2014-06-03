@@ -77,6 +77,13 @@ desc "Creates a new cookbook."
 task :new_cookbook, :name do |t, args|
   sh "bundle exec knife cookbook create #{args.name}"
   sh "bundle exec knife cookbook create_specs #{args.name}"
+  minitest_path = "cookbooks/#{args.name}/files/default/tests/minitest"
+  mkdir_p minitest_path
+  File.open("#{minitest_path}/default_test.rb", 'w') do |test|
+    test.puts "require 'minitest/spec'"
+    test.puts "describe_recipe '#{args.name}::default' do"
+    test.puts "end"
+  end
 end
 
 desc "Runs chefspec on all the cookbooks."
@@ -97,4 +104,29 @@ end
 desc "Runs foodcritic against all the cookbooks."
 task :knife_test_ci do
   sh "bundle exec knife cookbook test -a -c test/knife.rb"
+end
+
+desc "Uploads Berkshelf cookbooks to our chef server"
+task :berks_upload do
+  sh "bundle exec berks upload -c config/berks-config.json"
+end
+
+desc "Upload cookbooks to our chef server"
+task :spork_upload, :name do |t, args|
+  sh "bundle exec knife spork upload #{args.name}"
+end
+
+desc "Bumps Patch Version Number on cookbook"
+task :patch, :name do |t, args|
+  sh "bundle exec knife spork bump #{args.name} patch"
+end
+
+desc "Bumps Minor Version Number on cookbook"
+task :major, :name do |t, args|
+  sh "bundle exec knife spork bump #{args.name} minor"
+end
+
+desc "Bumps Major Version Number on cookbook"
+task :major, :name do |t, args|
+  sh "bundle exec knife spork bump #{args.name} major"
 end
