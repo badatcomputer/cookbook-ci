@@ -5,6 +5,7 @@ ruby '1.9.3'
 gem 'rake', '10.0.4'
 gem 'chef', '11.12.0'
 gem 'chefspec', '4.0.0'
+gem 'knife-spec'
 gem 'foodcritic', '2.1.0'
 
 group :development do
