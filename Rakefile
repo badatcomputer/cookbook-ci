@@ -110,3 +110,23 @@ desc "Uploads Berkshelf cookbooks to our chef server"
 task :berks_upload do
   sh "bundle exec berks upload -c config/berks-config.json"
 end
+
+desc "Upload cookbooks to our chef server"
+task :spork_upload, :name do |t, args|
+  sh "bundle exec knife spork upload #{args.name}"
+end
+
+desc "Bumps Patch Version Number on cookbook"
+task :patch, :name do |t, args|
+  sh "bundle exec knife spork bump #{args.name} patch"
+end
+
+desc "Bumps Minor Version Number on cookbook"
+task :major, :name do |t, args|
+  sh "bundle exec knife spork bump #{args.name} minor"
+end
+
+desc "Bumps Major Version Number on cookbook"
+task :major, :name do |t, args|
+  sh "bundle exec knife spork bump #{args.name} major"
+end
