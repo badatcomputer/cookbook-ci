@@ -18,7 +18,9 @@ task :check do
     'KNIFE_COOKBOOK_COPYRIGHT',
     'KNIFE_COOKBOOK_LICENSE',
     'KNIFE_COOKBOOK_EMAIL',
-    'KNIFE_CACHE_PATH'
+    'KNIFE_CACHE_PATH',
+    'VAGRANT_HTTP_PROXY',
+    'VAGRANT_HTTPS_PROXY'
   ]
   errors = []
   environment_vars.each do |var|
@@ -110,22 +112,35 @@ task :berks_upload do
   sh "bundle exec berks upload -c config/berks-config.json"
 end
 
-desc "Upload cookbooks to our chef server"
-task :spork_upload, :name do |t, args|
-  sh "bundle exec knife spork upload #{args.name}"
+
+# Spork Commands
+namespace :spork do
+
+  desc "Upload cookbooks to our chef server"
+  task :upload, :name do |t, args|
+    sh "bundle exec knife spork upload #{args.name}"
+  end
+
+  desc "Bumps Patch Version Number on cookbook"
+  task :patch, :name do |t, args|
+    sh "bundle exec knife spork bump #{args.name} patch"
+  end
+
+  desc "Bumps Minor Version Number on cookbook"
+  task :minor, :name do |t, args|
+    sh "bundle exec knife spork bump #{args.name} minor"
+  end
+
+  desc "Bumps Major Version Number on cookbook"
+  task :major, :name do |t, args|
+    sh "bundle exec knife spork bump #{args.name} major"
+  end
+
 end
 
-desc "Bumps Patch Version Number on cookbook"
-task :patch, :name do |t, args|
-  sh "bundle exec knife spork bump #{args.name} patch"
-end
-
-desc "Bumps Minor Version Number on cookbook"
-task :major, :name do |t, args|
-  sh "bundle exec knife spork bump #{args.name} minor"
-end
-
-desc "Bumps Major Version Number on cookbook"
-task :major, :name do |t, args|
-  sh "bundle exec knife spork bump #{args.name} major"
+begin
+  require 'kitchen/rake_tasks'
+  Kitchen::RakeTasks.new
+rescue LoadError
+  puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV['CI']
 end

@@ -1,0 +1,23 @@
+---
+driver:
+  name: vagrant
+  http_proxy: http://proxy-src.research.ge.com:8080
+  https_proxy: https://proxy-src.research.ge.com:8080
+
+provisioner:
+  name: chef_solo
+  #client_rb:
+  #    http_proxy: http://proxy-src.research.ge.com:8080
+  #    https_proxy: https://proxy-src.research.ge.com:8080
+  #    no_proxy: "10.* 127.0.0.1"
+
+platforms:
+  - name: ubuntu-12.04
+  - name: centos-6.4
+
+suites:
+  - name: default
+    data_bags_path: "test/integration/default/data_bags"
+    run_list:
+      - recipe[motd::default]
+    attributes:
