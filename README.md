@@ -3,6 +3,9 @@ Master branch: [![Build Status](https://magnum.travis-ci.com/badatcomputer/cookb
 
 Development branch: [![Build Status](https://magnum.travis-ci.com/badatcomputer/cookbook-ci.svg?token=aaaEpFJvuwYJf8JnpFPd&branch=develop)](https://magnum.travis-ci.com/badatcomputer/cookbook-ci)
 
+[![Coverage Status](https://coveralls.io/repos/badatcomputer/cookbook-ci/badge.png)](https://coveralls.io/r/badatcomputer/cookbook-ci)
+
+
 rake check (checks for other dependencies)
 rake build (runs the test suites)
 rake start (a wrapper for vagrant up)
