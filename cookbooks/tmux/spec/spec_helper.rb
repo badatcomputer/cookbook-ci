@@ -1,6 +1,9 @@
 # Added by ChefSpec
 require 'chefspec'
 
+require 'coveralls'
+Coveralls.wear!
+
 # Uncomment to use ChefSpec's Berkshelf extension
 # require 'chefspec/berkshelf'
 
