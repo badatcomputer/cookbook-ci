@@ -1,12 +1,13 @@
 source "https://rubygems.org"
 
-ruby '1.9.3'
+ruby '2.1.0'
 
 gem 'rake', '10.0.4'
 gem 'chef', '11.12.0'
 gem 'chefspec'
 gem 'knife-spec'
 gem 'foodcritic', '2.1.0'
+gem 'coveralls', require: false
 
 
 group :development do
